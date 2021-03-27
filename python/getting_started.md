@@ -10,7 +10,7 @@ Download the latest __Windows (64 bit)__ installer from the following. Get the l
 
 Run the installer. Choose a straightforward __Install now__ but be sure to check __Add Python to environment variables__; leave everything else as-is.
 
-**Test:** Open a new command shell (it must be new for your newly installed programs to be recognized). Type `python`. You should get a new prompt with three carets, like, `>>>`. You are now in Python and can type Python commands. When done, type `exit()`.
+**Test:** Open a new command shell (it must be new for your newly installed programs to be recognized). Type `python`. You should get a new prompt with three carets, like, `>>>`. You are now in Python and can type Python commands. Type `print('hello')` and observe the result. Type `1 + 2`. Type `x = 3` and then type `x` and `x + 1`. Congratulations, you are Python-ing. When done, type `exit()`.
 
 ## Install Scipy
 
@@ -28,9 +28,9 @@ Go to the home page of the project on Github at:
 
     https://github.com/ROBOTIS-GIT/DynamixelSDK
 
-Find the green button called `Code`, click the down arrow and click `Download ZIP`.
+Find the green button called __Code__, click the down arrow and click __Download ZIP__.
 
-Double click on the resulting ZIP file to extract it. Choose `Extract All` to extract to some location -- here we are assuming, for example, that if your username is `<username>`, you put it in:
+Double click on the resulting ZIP file to extract it. Choose __Extract All__ to extract to some location -- here we are assuming, for example, that if your username is `<username>`, you put it in:
 
     `C:\Users\<username>\Desktop\DynamixelSDK-master`
 
