@@ -1,5 +1,6 @@
-import servo.fixture
+import servo.dynamixel
 import dynamixel_sdk
+import sys
 
 # Control table address
 ADDR_PRO_TORQUE_ENABLE      = 64
@@ -24,14 +25,14 @@ ID_EL                       = 2
 
 MOVING_THRESHOLD            = 10
 
-class Fixture(servo.Fixture):
+class Fixture(servo.dynamixel.Fixture):
     
-    def __init__(self, devicename):
-        super(self.__class__, self).__init__(devicename)
-        self.__port_handler = dynamixel_sdk.PortHandler(self.__devicename)
+    def __init__(self, device_name):
+        super().__init__(device_name)
+        self.__port_handler = dynamixel_sdk.PortHandler(self.__device_name)
         self.__packet_handler = dynamixel_sdk.PacketHandler(PROTOCOL_VERSION)
         if not self.__port_handler.openPort():
-            print(' connection failed.')
+            print('Connection failed.')
             sys.exit(-1)
         self.__port_handler.setBaudRate(BAUDRATE)
         for id in [ID_AZ, ID_EL]:
@@ -47,15 +48,28 @@ class Fixture(servo.Fixture):
         self.go_motor(ID_EL, az_el[1])        
 
     def count(self, degrees):
-        return int((float(deg) / 0.0879) + 2048)
+        """Convert angle in degrees to servo counts."""
+        return int((float(degrees) / 0.0879) + 2048)
         
     def handle_result(self, dxl_comm_result, dxl_error):
+        """Handle results of a call to the Dynamixel servos.
+
+        Args:
+            dxl_comm_result: The result of the communications.
+            dxl_error: The error code returned.
+        """
         if dxl_comm_result != dynamixel_sdk.COMM_SUCCESS:
-            print('%s' % packet_handler.getTxRxResult(dxl_comm_result))
+            print('%s' % self.__packet_handler.getTxRxResult(dxl_comm_result))
         elif dxl_error != 0:
-            print('%s' % packet_handler.getRxPacketError(dxl_error))
+            print('%s' % self.__packet_handler.getRxPacketError(dxl_error))
 
     def go_motor(self, id, degrees):
+        """Command a motor to slew to an angle and wait for completion.
+        
+        Args:
+            id: The motor ID on the Dynamixel chain.
+            degrees: The desired angle in degrees.
+        """
         goal = self.count(degrees)
         dxl_comm_result, dxl_error = self.__packet_handler.write4ByteTxRx(
             self.__port_handler,

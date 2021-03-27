@@ -1,5 +1,8 @@
 
+
 class Source:
+    '''Abstract base class for a source of test pressures.'''
 
     def scan(self):
-        pass
+        '''Measure and return an array of pressures as configured.'''
+        return []

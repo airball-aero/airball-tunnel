@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
-from servo.fixture1 import Fixture
-from pressure.scanivalvesource import Source
-import alphabeta
+'''Sweep a range of alpha/beta values and write the output to a CSV file.'''
 
-f = Fixture('/dev/ttyACM4')
+import alphabeta
+from pressure.scanivalvesource import Source  # Fake Scanivalve data
+from servo.dynamixel import Fixture  # Dummy servo interface
+
+device_name = input('Enter device name (e.g. /dev/ttyUSB0 or COM1): ')
+
+f = Fixture(device_name)
 s = Source()
 
 with open('output.csv', 'w') as of:
