@@ -4,11 +4,11 @@
 
 This step installs the basic Python programming language plus a lot of helpful utilities that come bundled with it.
 
-Download the latest Windows (64 bit) installer from the following. Get the latest release (currently 3.9.2):
+Download the latest __Windows (64 bit)__ installer from the following. Get the latest release (currently __3.9.2__):
 
     https://www.python.org/downloads/windows/
 
-Run the installer. Choose a straightforward "Install now" but be sure to check “Add Python to environment variables”; leave everything else as-is.
+Run the installer. Choose a straightforward __Install now__ but be sure to check __Add Python to environment variables__; leave everything else as-is.
 
 **Test:** Open a new command shell (it must be new for your newly installed programs to be recognized). Type `python`. You should get a new prompt with three carets, like, `>>>`. You are now in Python and can type Python commands. When done, type `exit()`.
 
