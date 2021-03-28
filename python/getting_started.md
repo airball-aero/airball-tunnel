@@ -79,3 +79,17 @@ It will also ask you for a file name. Provide any name for the output file you w
 The program should give you a bunch of messages about what it’s doing--moving to various locations, reading from Scanivalve. All these are faked out with random numbers. The result should be a file with the name you chose.
 
 Try opening that file in Excel. Try looking at its contents. Imagine how you might use it from a program yourself.
+
+## Install the `matplotlib` module
+
+This module contains useful mathematical plotting functions.
+
+Use `pip install matplotlib` and test that it worked in the usual way. :)
+
+## Try plotting some data
+
+Pretend you produced a CSV file previously, called `output.csv`. Try running `plot_results.py` and enter that file name when asked. Observe the plot.
+
+## Work on the data analysis
+
+The `plot_results.py` program is incomplete. Can you add pressure coefficients for the remainder of the columns? Can you use a "real" formula for the theoretical pressure coefficients? The messy incantations of reading and plotting data are already there, but feel free to try to change things if you want.
