@@ -32,7 +32,7 @@ Find the green button called __Code__, click the down arrow and click __Download
 
 Double click on the resulting ZIP file to extract it. Choose __Extract All__ to extract to some location -- here we are assuming, for example, that if your username is `<username>`, you put it in:
 
-    `C:\Users\<username>\Desktop\DynamixelSDK-master`
+    C:\Users\<username>\Desktop\DynamixelSDK-master
 
 Open a Windows command shell and go to the `DynamixelSDK-master/python` folder. Type `setup.py install`.
 
@@ -46,7 +46,7 @@ Go to the home page of the project:
 
     https://git-scm.com/download/win
 
-Choose `64-bit Git for Windows Setup`. Run the downloaded file and click on `Next` in all the options; there is no need to change anything.
+Choose __64-bit Git for Windows Setup__. Run the downloaded file and click on __Next__ in all the options; there is no need to change anything.
 
 **Test:** In a new Windows command shell, type `git`. This should run the program and give you a list of all its options.
 
@@ -56,11 +56,11 @@ In the Git world, to "clone" a project means to grab a copy of it from somewhere
 
 Open a new Windows command shell and go to some directory, for example:
 
-    `C:\Users\user1\Desktop`
+    C:\Users\<username>\Desktop
 
 Type:
 
-    `git clone https://github.com/airball-aero/airball-tunnel.git`
+    git clone https://github.com/airball-aero/airball-tunnel.git
 
 **Test:** This should succeed quickly and create a directory called `airball-tunnel`.
 
