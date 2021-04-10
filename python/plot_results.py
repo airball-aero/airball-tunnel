@@ -86,22 +86,64 @@ col_r_coeff = coeff(col_r)
 ########################################################################
 # Compute theoretical values
 
-def c_theory_fn(alpha, beta):
-    '''Return pressure coefficient for center hole.'''
-    # Totally fake formula!
-    # TODO: Use proper formula
-    return math.cos(math.radians(alpha) * 10) + math.sin(math.radians(beta) * 10)
+# This is the core formula that computes the pressure at a given point
+# on a sphere as a function of angular offset from the stagnation point.
+# The result is a ratio of the stagnation pressure _q_. The angle is
+# given in radians.
+
+def sphere_coeff_polar(angle):
+    def cos_sq(x):
+        y = math.cos(x)
+        return y * y
+    return 1.0 - 9.0 / 4.0 * cos_sq(angle - math.pi / 2.0)
+
+# This formula takes two angles, alpha and beta, and computes the
+# pressure coefficient at the given point using the distance formula.
+
+PROBE_HALF_ANGLE = math.pi / 4.0
+
+def sphere_coeff_cartesian(alpha, beta):
+    return sphere_coeff_polar(
+        math.sqrt(alpha * alpha + beta * beta))
 
 col_c_theory = [
-    c_theory_fn(col_alpha[i], col_beta[i])
+    sphere_coeff_cartesian(col_alpha[i], col_beta[i])
     for i in range(0, len(col_alpha))
 ]
 
-# TODO: Add theory for other holes
+col_b_theory = [
+    sphere_coeff_cartesian(col_alpha[i] - 2 * PROBE_HALF_ANGLE, col_beta[i])
+    for i in range(0, len(col_alpha))
+]
+
+col_u_theory = [
+    sphere_coeff_cartesian(col_alpha[i] + PROBE_HALF_ANGLE, col_beta[i])
+    for i in range(0, len(col_alpha))
+]
+
+col_d_theory = [
+    sphere_coeff_cartesian(col_alpha[i] - PROBE_HALF_ANGLE, col_beta[i])
+    for i in range(0, len(col_alpha))
+]
+
+col_l_theory = [
+    sphere_coeff_cartesian(col_alpha[i], col_beta[i] + PROBE_HALF_ANGLE)
+    for i in range(0, len(col_alpha))
+]
+
+col_r_theory = [
+    sphere_coeff_cartesian(col_alpha[i], col_beta[i] - PROBE_HALF_ANGLE)
+    for i in range(0, len(col_alpha))
+]
 
 ########################################################################
 # Plot experimental curves
 
 compare_sweep(col_alpha, col_beta, col_c_theory, col_c_coeff, 'Center hole')
+compare_sweep(col_alpha, col_beta, col_b_theory, col_b_coeff, 'Bottom hole')
+compare_sweep(col_alpha, col_beta, col_u_theory, col_u_coeff, 'Upper hole')
+compare_sweep(col_alpha, col_beta, col_d_theory, col_d_coeff, 'Down hole')
+compare_sweep(col_alpha, col_beta, col_l_theory, col_l_coeff, 'Left hole')
+compare_sweep(col_alpha, col_beta, col_r_theory, col_r_coeff, 'Right hole')
 
 # TODO: Add plots for other holes
