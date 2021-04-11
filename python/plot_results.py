@@ -6,6 +6,7 @@ import csv
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import math
+import numpy
 
 def read_csv(filename):
     '''Read the specified CSV file and return an array of columns.'''
@@ -153,6 +154,59 @@ compare_sweep(
     col_alpha, col_beta, col_r_theory, col_r_coeff, '(R)ight hole')
 
 plt.show()
-# If you want to save it instead, comment out the above line and
-# un-comment this one....
+
+# If you want to save a plot, do:
 # plt.savefig(file_name + '.png', dpi=600)
+
+combined = [
+    [
+        col_alpha,
+        col_beta,
+        col_c_theory,
+        col_c_coeff,
+    ],
+    [
+        list(map(lambda x: x - 90, col_alpha)),
+        col_beta,
+        col_b_theory,
+        col_b_coeff,
+    ],
+    [
+        list(map(lambda x: x + 45, col_alpha)),
+        col_beta,
+        col_u_theory,
+        col_u_coeff,
+    ],
+    [
+        list(map(lambda x: x - 45, col_alpha)),
+        col_beta,
+        col_d_theory,
+        col_d_coeff,
+    ],
+    [
+        col_alpha,
+        list(map(lambda x: x + 45, col_beta)),
+        col_l_theory,
+        col_l_coeff,
+    ],
+    [
+        col_alpha,        
+        list(map(lambda x: x - 45, col_beta)),
+        col_r_theory,
+        col_r_coeff,
+    ],
+]
+
+combined = [
+    numpy.concatenate([
+        combined[i][j]
+        for i in range(0, len(combined))
+    ])
+    for j in range(0, 4)
+]
+
+fig = plt.figure()
+compare_sweep(
+    fig.add_subplot(1,1, 1, projection='3d'),
+    combined[0], combined[1], combined[2], combined[3], 'Combined')
+plt.show()
