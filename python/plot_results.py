@@ -68,7 +68,7 @@ col_r     = columns[COL_R]
 
 def limit(x):
     '''Limit values because random numbers are random.'''
-    return min(max(x, -10.0), 10.0)
+    return min(max(x, -1.0), 1.0)
 
 def coeff(d):
     return [
@@ -95,12 +95,10 @@ def sphere_coeff_polar(angle):
     def cos_sq(x):
         y = math.cos(x)
         return y * y
-    return 1.0 - 9.0 / 4.0 * cos_sq(angle - math.pi / 2.0)
+    return 1.0 - 9.0 / 4.0 * cos_sq(math.radians(angle)- math.pi / 2.0)
 
 # This formula takes two angles, alpha and beta, and computes the
 # pressure coefficient at the given point using the distance formula.
-
-PROBE_HALF_ANGLE = math.pi / 4.0
 
 def sphere_coeff_cartesian(alpha, beta):
     return sphere_coeff_polar(
@@ -112,27 +110,27 @@ col_c_theory = [
 ]
 
 col_b_theory = [
-    sphere_coeff_cartesian(col_alpha[i] - 2 * PROBE_HALF_ANGLE, col_beta[i])
+    sphere_coeff_cartesian(col_alpha[i] - 90, col_beta[i])
     for i in range(0, len(col_alpha))
 ]
 
 col_u_theory = [
-    sphere_coeff_cartesian(col_alpha[i] + PROBE_HALF_ANGLE, col_beta[i])
+    sphere_coeff_cartesian(col_alpha[i] + 45, col_beta[i])
     for i in range(0, len(col_alpha))
 ]
 
 col_d_theory = [
-    sphere_coeff_cartesian(col_alpha[i] - PROBE_HALF_ANGLE, col_beta[i])
+    sphere_coeff_cartesian(col_alpha[i] - 45, col_beta[i])
     for i in range(0, len(col_alpha))
 ]
 
 col_l_theory = [
-    sphere_coeff_cartesian(col_alpha[i], col_beta[i] + PROBE_HALF_ANGLE)
+    sphere_coeff_cartesian(col_alpha[i], col_beta[i] + 45)
     for i in range(0, len(col_alpha))
 ]
 
 col_r_theory = [
-    sphere_coeff_cartesian(col_alpha[i], col_beta[i] - PROBE_HALF_ANGLE)
+    sphere_coeff_cartesian(col_alpha[i], col_beta[i] - 45)
     for i in range(0, len(col_alpha))
 ]
 
