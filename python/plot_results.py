@@ -16,9 +16,7 @@ def read_csv(filename):
             for col in range(0, len(rows[0]))
         ]
 
-def compare_sweep(alpha, beta, theory, experimental, label):
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
+def compare_sweep(ax, alpha, beta, theory, experimental, label):
     ax.set_xlabel('alpha (degrees)')
     ax.set_ylabel('beta (degrees)')
     ax.set_zlabel(label)
@@ -29,10 +27,6 @@ def compare_sweep(alpha, beta, theory, experimental, label):
         'theory',
         'experimental',
     ])
-    plt.show()
-    # If you want to save it instead, comment out the above line and
-    # un-comment this one....
-    # plt.savefig(label + '.png', dpi=600)
            
 ########################################################################
 # Define column indexes in the original CSV file
@@ -137,11 +131,28 @@ col_r_theory = [
 ########################################################################
 # Plot experimental curves
 
-compare_sweep(col_alpha, col_beta, col_c_theory, col_c_coeff, 'Center hole')
-compare_sweep(col_alpha, col_beta, col_b_theory, col_b_coeff, 'Bottom hole')
-compare_sweep(col_alpha, col_beta, col_u_theory, col_u_coeff, 'Upper hole')
-compare_sweep(col_alpha, col_beta, col_d_theory, col_d_coeff, 'Down hole')
-compare_sweep(col_alpha, col_beta, col_l_theory, col_l_coeff, 'Left hole')
-compare_sweep(col_alpha, col_beta, col_r_theory, col_r_coeff, 'Right hole')
+fig = plt.figure()
 
-# TODO: Add plots for other holes
+compare_sweep(
+    fig.add_subplot(2, 3, 1, projection='3d'),
+    col_alpha, col_beta, col_c_theory, col_c_coeff, '(C)enter hole')
+compare_sweep(
+    fig.add_subplot(2, 3, 2, projection='3d'),
+    col_alpha, col_beta, col_b_theory, col_b_coeff, '(B)ottom hole')
+compare_sweep(
+    fig.add_subplot(2, 3, 3, projection='3d'),
+    col_alpha, col_beta, col_u_theory, col_u_coeff, '(U)pper hole')
+compare_sweep(
+    fig.add_subplot(2, 3, 4, projection='3d'),
+    col_alpha, col_beta, col_d_theory, col_d_coeff, '(D)own hole')
+compare_sweep(
+    fig.add_subplot(2, 3, 5, projection='3d'),
+    col_alpha, col_beta, col_l_theory, col_l_coeff, '(L)eft hole')
+compare_sweep(
+    fig.add_subplot(2, 3, 6, projection='3d'),
+    col_alpha, col_beta, col_r_theory, col_r_coeff, '(R)ight hole')
+
+plt.show()
+# If you want to save it instead, comment out the above line and
+# un-comment this one....
+# plt.savefig(file_name + '.png', dpi=600)
