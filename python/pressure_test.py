@@ -4,7 +4,7 @@
 
 import time
 
-from pressure.scanivalvesource import Source
+from pressure.bogovalvesource import Source
 
 s = Source()
 
