@@ -14,12 +14,12 @@ class Source(pressure.source.Source):
         s.connect(('191.30.80.175', 23))
         self.__file_r = s.makefile(mode='r')
         self.__file_w = s.makefile(mode='w')
-        self.set_var('EU', 1)
-        self.set_var('BIN', 0)
-        self.set_var('FORMAT', 0)
-        self.set_var('FPS', 0)
-        self.set_var('AVG', 16)
-        self.set_var('PERIOD', 20000)
+        #self.set_var('EU', 1)
+        #self.set_var('BIN', 0)
+        #self.set_var('FORMAT', 0)
+        #self.set_var('FPS', 0)
+        #self.set_var('AVG', 16)
+        #self.set_var('PERIOD', 20000)
         self.send('SCAN')
         lines = self.get_scan_lines()
         self.__file_r = None
@@ -44,4 +44,5 @@ class Source(pressure.source.Source):
         ]
 
     def readline(self):
-        return self.__file_r.readline()
+        z=self.__file_r.readline()
+        return z
