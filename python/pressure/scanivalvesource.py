@@ -1,5 +1,6 @@
 import pressure.source
 import socket
+import telnetlib
 
 
 class Source(pressure.source.Source):
@@ -10,10 +11,11 @@ class Source(pressure.source.Source):
         self.__file_w = None
 
     def scan(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(('191.30.80.175', 23))
-        self.__file_r = s.makefile(mode='r')
-        self.__file_w = s.makefile(mode='w')
+        # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # s.connect(('191.30.80.175', 23))
+        # self.__file_r = s.makefile(mode='r')
+        # self.__file_w = s.makefile(mode='w')
+        self.__telnet = telnetlib.Telnet('191.30.80.175', 23)
         #self.set_var('EU', 1)
         #self.set_var('BIN', 0)
         #self.set_var('FORMAT', 0)
@@ -22,9 +24,10 @@ class Source(pressure.source.Source):
         #self.set_var('PERIOD', 20000)
         self.send('SCAN')
         lines = self.get_scan_lines()
-        self.__file_r = None
-        self.__file_w = None
-        s.close()
+        # self.__file_r = None
+        # self.__file_w = None
+        # s.close()
+        self.__telnet.close()
         return [
             float(lines[i].split(' ')[1])
             for i in range(1, len(lines))
@@ -35,7 +38,8 @@ class Source(pressure.source.Source):
 
     def send(self, str):
         print('send(%s)' % str)
-        self.__file_w.write(str + '\n')
+        # self.__file_w.write(str + '\n')
+        self.__telnet.write(bytes(str + '\n', 'utf-8'))
 
     def get_scan_lines(self):
         return [
@@ -44,5 +48,5 @@ class Source(pressure.source.Source):
         ]
 
     def readline(self):
-        z=self.__file_r.readline()
-        return z
+        # return self.__file_r.readline()
+        return self.__telnet.read_until(b'\n').decode('utf-8').strip()

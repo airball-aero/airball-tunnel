@@ -4,10 +4,10 @@
 
 import time
 
-from pressure.bogovalvesource import Source
+from pressure.scanivalvesource import Source
 
 s = Source()
 
 while True:
      print(s.scan())
-     time.sleep(1)
+     time.sleep(0.1)
