@@ -35,12 +35,12 @@ def compare_sweep(ax, alpha, beta, theory, experimental, label):
 COL_ALPHA = 0
 COL_BETA  = 1
 COL_Q     = 2  # Scanivalve ch 0, tunnel q
-COL_C     = 3  # Scanivalve ch 1, (C)enter hole
-COL_B     = 4  # Scanivalve ch 2, (B)ottom hole
-COL_U     = 5  # Scanivalve ch 3, (U)pper hole
-COL_D     = 6  # Scanivalve ch 4, (D)own hole
-COL_L     = 7  # Scanivalve ch 5, (L)eft hole
-COL_R     = 8  # Scanivalve ch 6, (R)ight hole
+COL_C     = 3  # Scanivalve ch 1+1=2, (C)enter hole
+COL_B     = 4  # Scanivalve ch 2+1=3, (B)ottom hole
+COL_U     = 5  # Scanivalve ch 3+1=4, (U)pper hole
+COL_D     = 6  # Scanivalve ch 4+1=5, (D)own hole
+COL_L     = 7  # Scanivalve ch 5+1=6, (L)eft hole
+COL_R     = 8  # Scanivalve ch 6+1=7, (R)ight hole
 
 ########################################################################
 # Read the file and assign each column to a variable

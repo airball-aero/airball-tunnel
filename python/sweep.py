@@ -14,10 +14,10 @@ f = Fixture(device_name)
 s = Source()
 
 with open(file_name, 'w') as of:
-    for alpha in range(-45, 45 + 1, 5):
-        for beta in range(-45, 45 + 1, 5):
+    for alpha in range(-24, 24 + 1, 6):
+        for beta in range(-24, 24 + 1, 6):
             f.moveto(alphabeta.alpha_beta_to_az_el([alpha, beta]))
-            time.sleep(3)
+            time.sleep(2.8)
             p = s.scan()
             of.write(
                 ','.join(
