@@ -2,6 +2,7 @@
 
 '''Plot results from an alpha/beta sweep.'''
 
+import sys
 import csv
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
@@ -45,7 +46,11 @@ COL_R     = 8  # Scanivalve ch 6+1=7, (R)ight hole
 ########################################################################
 # Read the file and assign each column to a variable
 
-file_name = input('Enter name of CSV file containing data: ')
+if len(sys.argv) > 1:
+    file_name = sys.argv[1]
+else:
+    file_name = input('Enter name of CSV file containing data: ')
+
 columns = read_csv(file_name)
 
 col_alpha = columns[COL_ALPHA]
@@ -153,6 +158,27 @@ compare_sweep(
     fig.add_subplot(2, 3, 6, projection='3d'),
     col_alpha, col_beta, col_r_theory, col_r_coeff, '(R)ight hole')
 
+plt.show()
+
+fig = plt.figure()
+compare_sweep(
+    fig.add_subplot(1, 3, 1, projection='3d'),
+    col_alpha, col_beta,
+    numpy.array(col_c_theory) - numpy.array(col_u_theory),
+    numpy.array(col_c_coeff) - numpy.array(col_u_coeff),
+    'dp0')
+compare_sweep(
+    fig.add_subplot(1, 3, 2, projection='3d'),
+    col_alpha, col_beta,
+    numpy.array(col_d_theory) - numpy.array(col_u_theory),    
+    numpy.array(col_d_coeff) - numpy.array(col_u_coeff),
+    'dpa')
+compare_sweep(
+    fig.add_subplot(1, 3, 3, projection='3d'),
+    col_alpha, col_beta,
+    numpy.array(col_r_theory) - numpy.array(col_l_theory),
+    numpy.array(col_r_coeff) - numpy.array(col_l_coeff),
+    'dpb')
 plt.show()
 
 # If you want to save a plot, do:

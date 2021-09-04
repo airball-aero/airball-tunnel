@@ -3,7 +3,7 @@ from dxl import *
 from dxl.dxlcore import *
 
 class Fixture(servo.dynamixel.Fixture):
-    """Fixture for Dyanamixel Protocol 1.0 (e.g., AX-12A) servos."""
+    '''Fixture for Dyanamixel Protocol 1.0 (e.g., AX-12A) servos.'''
 
     __az_id = 1
     __el_id = 2
@@ -25,7 +25,7 @@ class Fixture(servo.dynamixel.Fixture):
             speed=self.__speed)
         
     def count(self, degrees):
-        """Convert angle in degrees to servo counts."""
+        '''Convert angle in degrees to servo counts.'''
         count = int(float(degrees) / 0.29) + 512
         count = max(0, count)
         count = min(1023, count)
