@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''Plot results from an alpha/beta sweep.'''
 
@@ -8,6 +8,7 @@ from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import math
 import numpy
+import sys
 
 def read_csv(filename):
     '''Read the specified CSV file and return an array of columns.'''
@@ -26,10 +27,10 @@ def compare_sweep(ax, alpha, beta, theory, experimental, label):
         ax.scatter3D(alpha, beta, theory),
         ax.scatter3D(alpha, beta, experimental),
     ], [
-        'theory',
-        'experimental',
+        '', #'theory',
+        '', #'experimental',
     ])
-           
+
 ########################################################################
 # Define column indexes in the original CSV file
 
@@ -43,6 +44,22 @@ COL_D     = 6  # Scanivalve ch 4+1=5, (D)own hole
 COL_L     = 7  # Scanivalve ch 5+1=6, (L)eft hole
 COL_R     = 8  # Scanivalve ch 6+1=7, (R)ight hole
 
+def distance(x, y):
+    return math.sqrt(math.pow(x, 2) + math.pow(y, 2))
+
+def filter(cols):
+    r = [[] for k in range(0, len(cols))]
+    for i in range(0, len(cols[0])):
+        if distance(cols[COL_ALPHA][i], cols[COL_BETA][i]) > 45.0:
+            continue
+        if cols[COL_ALPHA][i] > 30.0:
+            continue
+        if cols[COL_ALPHA][i] < -20.0:
+            continue
+        for k in range(0, len(cols)):
+            r[k].append(cols[k][i])
+    return r
+
 ########################################################################
 # Read the file and assign each column to a variable
 
@@ -51,7 +68,7 @@ if len(sys.argv) > 1:
 else:
     file_name = input('Enter name of CSV file containing data: ')
 
-columns = read_csv(file_name)
+columns = filter(read_csv(file_name))
 
 col_alpha = columns[COL_ALPHA]
 col_beta  = columns[COL_BETA]
@@ -71,10 +88,10 @@ def limit(x):
     return min(max(x, -1.0), 1.0)
 
 def coeff(d):
-    return [
+    return numpy.array([
         limit(d[i] / col_q[i])
         for i in range(0, len(col_q))
-    ]
+    ])
 
 col_c_coeff = coeff(col_c)
 col_b_coeff = coeff(col_b)
@@ -104,60 +121,87 @@ def sphere_coeff_cartesian(alpha, beta):
     return sphere_coeff_polar(
         math.sqrt(alpha * alpha + beta * beta))
 
-col_c_theory = [
+col_c_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i], col_beta[i])
     for i in range(0, len(col_alpha))
-]
+])
 
-col_b_theory = [
+col_b_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i] - 90, col_beta[i])
     for i in range(0, len(col_alpha))
-]
+])
 
-col_u_theory = [
+col_u_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i] + 45, col_beta[i])
     for i in range(0, len(col_alpha))
-]
+])
 
-col_d_theory = [
+col_d_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i] - 45, col_beta[i])
     for i in range(0, len(col_alpha))
-]
+])
 
-col_l_theory = [
+col_l_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i], col_beta[i] + 45)
     for i in range(0, len(col_alpha))
-]
+])
 
-col_r_theory = [
+col_r_theory = numpy.array([
     sphere_coeff_cartesian(col_alpha[i], col_beta[i] - 45)
     for i in range(0, len(col_alpha))
-]
+])
 
 ########################################################################
 # Plot experimental curves
 
+# fig = plt.figure()
+
+# compare_sweep(
+#     fig.add_subplot(2, 3, 1, projection='3d'),
+#     col_alpha, col_beta, col_c_theory, col_c_coeff, '(C)enter hole')
+# compare_sweep(
+#     fig.add_subplot(2, 3, 2, projection='3d'),
+#     col_alpha, col_beta, col_b_theory, col_b_coeff, '(B)ottom hole')
+# compare_sweep(
+#     fig.add_subplot(2, 3, 3, projection='3d'),
+#     col_alpha, col_beta, col_u_theory, col_u_coeff, '(U)pper hole')
+# compare_sweep(
+#     fig.add_subplot(2, 3, 4, projection='3d'),
+#     col_alpha, col_beta, col_d_theory, col_d_coeff, '(D)own hole')
+# compare_sweep(
+#     fig.add_subplot(2, 3, 5, projection='3d'),
+#     col_alpha, col_beta, col_l_theory, col_l_coeff, '(L)eft hole')
+# compare_sweep(
+#     fig.add_subplot(2, 3, 6, projection='3d'),
+#     col_alpha, col_beta, col_r_theory, col_r_coeff, '(R)ight hole')
+
+# plt.show()
+
+dpzero = (col_c_coeff - col_b_coeff)
+dpbeta  = (col_r_coeff - col_l_coeff) / dpzero
+dpalpha = (col_d_coeff - col_u_coeff) / dpzero
+
+
 fig = plt.figure()
+compare_sweep(
+    fig.add_subplot(1,1, 1, projection='3d'),
+    col_alpha,
+    col_beta,
+    dpzero,
+    dpzero,
+    'Test')
+plt.show()
 
-compare_sweep(
-    fig.add_subplot(2, 3, 1, projection='3d'),
-    col_alpha, col_beta, col_c_theory, col_c_coeff, '(C)enter hole')
-compare_sweep(
-    fig.add_subplot(2, 3, 2, projection='3d'),
-    col_alpha, col_beta, col_b_theory, col_b_coeff, '(B)ottom hole')
-compare_sweep(
-    fig.add_subplot(2, 3, 3, projection='3d'),
-    col_alpha, col_beta, col_u_theory, col_u_coeff, '(U)pper hole')
-compare_sweep(
-    fig.add_subplot(2, 3, 4, projection='3d'),
-    col_alpha, col_beta, col_d_theory, col_d_coeff, '(D)own hole')
-compare_sweep(
-    fig.add_subplot(2, 3, 5, projection='3d'),
-    col_alpha, col_beta, col_l_theory, col_l_coeff, '(L)eft hole')
-compare_sweep(
-    fig.add_subplot(2, 3, 6, projection='3d'),
-    col_alpha, col_beta, col_r_theory, col_r_coeff, '(R)ight hole')
+sys.exit(-1)
 
+fig = plt.figure()
+compare_sweep(
+    fig.add_subplot(1,1, 1, projection='3d'),
+    col_alpha,
+    col_beta,
+    dpalpha,
+    dpbeta,
+    'Test')
 plt.show()
 
 fig = plt.figure()
@@ -216,7 +260,7 @@ combined = [
         col_l_coeff,
     ],
     [
-        col_alpha,        
+        col_alpha,
         list(map(lambda x: x - 45, col_beta)),
         col_r_theory,
         col_r_coeff,
@@ -230,9 +274,3 @@ combined = [
     ])
     for j in range(0, 4)
 ]
-
-fig = plt.figure()
-compare_sweep(
-    fig.add_subplot(1,1, 1, projection='3d'),
-    combined[0], combined[1], combined[2], combined[3], 'Combined')
-plt.show()
