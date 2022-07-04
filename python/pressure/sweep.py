@@ -8,7 +8,7 @@ NUM_CHANNELS = 8
 
 
 class Channels(dict):
-`
+
     def __init__(self, label):
         self.label = label
         self.alpha = []
