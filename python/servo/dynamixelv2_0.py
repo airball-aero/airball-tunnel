@@ -22,11 +22,11 @@ BAUDRATE                    = 57600
 TORQUE_ENABLE               = 1
 TORQUE_DISABLE              = 0
 
-VELOCITY                    = 25
+VELOCITY                    = 100
 
-POSITION_P_GAIN             = 1000
-POSITION_I_GAIN             = 1000
-POSITION_D_GAIN             = 100
+POSITION_P_GAIN             = 2000
+POSITION_I_GAIN             = 5000
+POSITION_D_GAIN             = 1000
 
 DXL_MINIMUM_POSITION_VALUE  = 10
 DXL_MAXIMUM_POSITION_VALUE  = 4000
@@ -35,7 +35,7 @@ DXL_MOVING_STATUS_THRESHOLD = 0
 ID_AZ                       = 1
 ID_EL                       = 2
 
-MOVING_THRESHOLD            = 5
+MOVING_THRESHOLD            = 0
 
 class Fixture(servo.dynamixel.Fixture):
     
