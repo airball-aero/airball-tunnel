@@ -4,7 +4,7 @@ NUMSENSORS=8
 
 class PressureScanner:
 
-    def __init__(self, path, baud):
+    def __init__(self, path, baud=115200):
         self.__path__ = path
         self.__baud__ = baud
 
