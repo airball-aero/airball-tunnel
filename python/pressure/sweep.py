@@ -17,7 +17,7 @@ class Channels(dict):
             self[i] = []
 
     def abs_alpha(self):
-        d = Channels(self.label)
+        d = Channels(self.label + '.abs_alpha')
         d.alpha = map(abs, self.alpha)
         d.beta = self.beta
         for i in range(0, NUM_CHANNELS):
@@ -25,11 +25,39 @@ class Channels(dict):
         return d
 
     def abs_beta(self):
-        d = Channels(self.label)
+        d = Channels(self.label + '.abs_beta')
         d.alpha = self.alpha
         d.beta = map(abs, self.beta)
         for i in range(0, NUM_CHANNELS):
             d[i] = self[i]
+        return d
+
+    def asymmetry(self):
+        
+        m = {}
+        
+        for i in range(0, len(self.alpha)):
+            
+            alphabeta = (abs(self.alpha[i]), abs(self.beta[i]))
+            
+            if not alphabeta in m:
+                m[alphabeta] = []
+                for chan in range(0, NUM_CHANNELS):
+                  m[alphabeta].append([])
+            for chan in range(0, NUM_CHANNELS):
+                m[alphabeta][chan].append(self[chan][i])
+
+        def asymmetry(arr):
+            return max(arr) - min(arr)
+
+        d = Channels(self.label + '.asymmetry')
+                
+        for alphabeta in m:
+            d.alpha.append(alphabeta[0])
+            d.beta.append(alphabeta[1])
+            for chan in range(0, NUM_CHANNELS):
+                d[chan].append(asymmetry(m[alphabeta][chan]))
+                
         return d
 
     
@@ -41,14 +69,19 @@ class Sweep:
         self.sigma = sigma
 
     def abs_alpha(self):
-        return Sweep(self.label,
+        return Sweep(self.label + '.abs_alpha',
                      self.data.abs_alpha(),
                      sigma.abs_alpha())
 
     def abs_beta(self):
-        return Sweep(self.label,
+        return Sweep(self.label + '.abs_beta',
                      self.data.abs_beta(),
                      self.sigma.abs_beta())
+
+    def asymmetry(self):
+        return Sweep(self.label + '.asymmetry',
+                     self.data.asymmetry(),
+                     self.sigma.asymmetry())
 
     def read(data_path, cal):
         
