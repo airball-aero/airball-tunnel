@@ -12,17 +12,17 @@ We constructed a wind tunnel fixture that moved the test article in the Î± and Ã
 
 The electronics contained motor control parts as well as an ESP32 development board, an I2C mux, and eight Honeywell pressure sensors:
 
-![](electronics.jpg)
+<img src="electronics.jpg" width="50%">
 
 All sensor readings were taken relative to static pressure. Sensor _0_ was always reading from a Pitot probe, providing an estimate of free stream tunnel dynamic pressure, or "tunnel _q_".
 
 The static and Pitot pressures were obtained from a pair of probes made from 1/4" tubes, somewhat downstream of the test section:
 
-![](static_dynamic.jpg)
+<img src="static_dynamic.jpg" width="50%">
 
 We used Luer-Lock connectors extensively to allow rapid changing of the tunnel test article:
 
-![](luer-lock.jpg)
+<img src="luer-lock.jpg" width="50%">
 
 ## Configurations
 
@@ -30,8 +30,8 @@ We tested several "configurations" -- a combination of a test article and a mapp
 
 ### `c01` 5 hole plus static plenum
 
-![](c01_1.jpg)
-![](c01_2.jpg)
+<img src="c01_1.jpg" width="50%">
+<img src="c01_2.jpg" width="50%">
 
 5 hole ball nose. 2 static pressure holes at the 90 degree locations, left and right, leading up to a central plenum. 3D printed from SLS Nylon.
 
@@ -48,7 +48,7 @@ We tested several "configurations" -- a combination of a test article and a mapp
 
 ### `c02` Same as `c01` with drilling
 
-![](c02_1.jpg)
+<img src="c02_1.jpg" width="50%">
 
 Same test article as `c01`, but the two static pressure holes were drilled out (to clean up the 3D printed shape) by twirling a 1/16" drill bit carefully within them.
 
@@ -65,7 +65,7 @@ Same test article as `c01`, but the two static pressure holes were drilled out (
 
 ### `c03` Same as `c0` with HP MJF
 
-![](c03_1.jpg)
+<img src="c03_1.jpg" width="50%">
 
 Similar geometry to test article `c01` but manufactured from HP Multi-Jet Fusion (MJF) 3D printing technology.
 
@@ -82,7 +82,7 @@ Similar geometry to test article `c01` but manufactured from HP Multi-Jet Fusion
 
 ### `c04` Test of alternative static pressure probe
 
-![](c04_1.jpg)
+<img src="c04_1.jpg" width="50%">
 
 Testing a static probe made of a 4mm brass tube above the ball nose, with static pressure holes drilled in the sides in a ring. Demonstrate, among other things, the interaction of the ball nose with the readings in the static probe.
 
@@ -99,7 +99,7 @@ Testing a static probe made of a 4mm brass tube above the ball nose, with static
 
 ### `c05` Static plenum holes moved back
 
-![](c05_1.jpg)
+<img src="c05_1.jpg" width="50%">
 
 Testing a case where the static plenum holes are spaced about 1/2" behind the 90-degree location.
 
@@ -148,11 +148,11 @@ The file `roomfan.csv` is a file similar to the above, but for a test run with a
 
 The following are the plotted claibration curves for the sensors, showing the differences between the "theoretical" output and the corrected data points obtained via water manometer calibration.
 
-![](./esp32_scanner.cal_plot_0.png)
-![](./esp32_scanner.cal_plot_1.png)
-![](./esp32_scanner.cal_plot_2.png)
-![](./esp32_scanner.cal_plot_3.png)
-![](./esp32_scanner.cal_plot_4.png)
-![](./esp32_scanner.cal_plot_5.png)
-![](./esp32_scanner.cal_plot_6.png)
-![](./esp32_scanner.cal_plot_7.png)
+<img src="./esp32_scanner.cal_plot_0.png" width="50%">
+<img src="./esp32_scanner.cal_plot_1.png" width="50%">
+<img src="./esp32_scanner.cal_plot_2.png" width="50%">
+<img src="./esp32_scanner.cal_plot_3.png" width="50%">
+<img src="./esp32_scanner.cal_plot_4.png" width="50%">
+<img src="./esp32_scanner.cal_plot_5.png" width="50%">
+<img src="./esp32_scanner.cal_plot_6.png" width="50%">
+<img src="./esp32_scanner.cal_plot_7.png" width="50%">
