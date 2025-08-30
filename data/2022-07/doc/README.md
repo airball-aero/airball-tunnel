@@ -8,7 +8,7 @@ This data represents wind tunnel testing for a series of probe nose configuratio
 
 We constructed a wind tunnel fixture that moved the test article in the α and ß axes using two Dynamixel servos
 
-<video src="./fixture.mp4" controls preload></video>
+[See video here](https://photos.app.goo.gl/kQPpuJsDNRqsAYsL6)
 
 The electronics contained motor control parts as well as an ESP32 development board, an I2C mux, and eight Honeywell pressure sensors:
 
